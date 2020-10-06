@@ -10,10 +10,13 @@
 
 
 Motor motor;
+IR_SENSOR ir_sensor;
 
 void setup() {
     Serial.begin(9600);
     motor.init();   
+	ir_sensor.init();
+
 }
 
 void loop() {

@@ -85,6 +85,18 @@ void Motor::direction(int dir, int speed)
 	control(m1, m2, m3);
 }
 
+// IR FUNCTIONS
+
+IR_SENSOR::IR_SENSOR()
+= default;
+
+void IR_SENSOR::init(){
+	pinMode(IR_S0, INPUT);
+	pinMode(IR_S1, INPUT);
+	pinMode(IR_S2, INPUT);
+	pinMode(IR_S3, INPUT);
+	pinMode(COMM_OUT, OUTPUT);
+}
 
 // SONAR FUNCTIONS
 

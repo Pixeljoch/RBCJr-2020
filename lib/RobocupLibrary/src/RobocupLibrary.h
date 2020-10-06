@@ -34,6 +34,19 @@ public:
 	void direction(int dir, int speed);
 };
 
+class IR_SENSOR{
+	private:
+		#define IR_S0 22
+		#define IR_S1 23
+		#define IR_S2 24
+		#define IR_S3 25	
+		#define COMM_OUT A0
+	public:
+		IR_SENSOR();
+		void init();
+		
+};
+
 class Sonar
 {
 private:
