@@ -45,9 +45,7 @@ class IR_SENSOR{
 		const int IR_SENS[12] = {A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12};
 	public:
 		IR_SENSOR();
-		void init();
-		void initMux();
-		
+		void init(int mode);
 };
 
 class Sonar

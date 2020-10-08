@@ -15,8 +15,7 @@ IR_SENSOR ir_sensor;
 void setup() {
     Serial.begin(9600);
     motor.init();   
-	ir_sensor.init();
-
+	ir_sensor.init(0);
 }
 
 void loop() {

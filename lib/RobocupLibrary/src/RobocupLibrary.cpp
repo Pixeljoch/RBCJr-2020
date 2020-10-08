@@ -20,45 +20,91 @@ void Motor::init()
 }
 
 void Motor::control(int SPEED_1, int SPEED_2, int SPEED_3) {
-	if(SPEED_1 < 0 && SPEED_1 >= -255)
-	{
-		digitalWrite(M1_IN1, HIGH);
-		digitalWrite(M1_IN2, LOW);
-		analogWrite(M1_EN, SPEED_1 * -1);
+	switch (SPEED_1){
+		case -255 ... -1:
+			digitalWrite(M1_IN1, HIGH);
+			digitalWrite(M1_IN2, LOW);
+			analogWrite(M1_EN, SPEED_1 * -1);
+		case 1 ... 255:
+			digitalWrite(M1_IN1, LOW);
+			digitalWrite(M1_IN2, HIGH);
+			analogWrite(M1_EN, SPEED_1);
+		case 0:
+			digitalWrite(M1_IN1, LOW);
+			digitalWrite(M1_IN2, HIGH);
+			analogWrite(M1_EN, 1);
+	};
+
+	switch (SPEED_2){
+		case -255 ... -1:
+			digitalWrite(M2_IN1, LOW);
+			digitalWrite(M2_IN2, HIGH);
+			analogWrite(M2_EN, SPEED_2 * -1);
+		case 1 ... 255:
+			digitalWrite(M2_IN1, HIGH);
+			digitalWrite(M2_IN2, LOW);
+			analogWrite(M2_EN, SPEED_2);
+		case 0:
+			digitalWrite(M2_IN1, HIGH);
+			digitalWrite(M2_IN2, LOW);
+			analogWrite(M2_EN, 1);
 	}
-	if(SPEED_1 > 0 && SPEED_1 <= 255)
-	{
-		digitalWrite(M1_IN1, LOW);
-		digitalWrite(M1_IN2, HIGH);
-		analogWrite(M1_EN, SPEED_1);
+
+	switch (SPEED_3){
+		case -255 ... -1:
+			digitalWrite(M3_IN1, LOW);
+			digitalWrite(M3_IN2, HIGH);
+			analogWrite(M3_EN, SPEED_3 * -1);
+		case 1 ... 255:
+			digitalWrite(M3_IN1, HIGH);
+			digitalWrite(M3_IN2, LOW);
+			analogWrite(M3_EN, SPEED_3);
+		case 0:
+			digitalWrite(M3_IN1, HIGH);
+			digitalWrite(M3_IN2, LOW);
+			analogWrite(M3_EN, 1);
 	}
+
+
+	// if(SPEED_1 < 0 && SPEED_1 >= -255)
+	// {
+	// 	digitalWrite(M1_IN1, HIGH);
+	// 	digitalWrite(M1_IN2, LOW);
+	// 	analogWrite(M1_EN, SPEED_1 * -1);
+	// }
+	// if(SPEED_1 > 0 && SPEED_1 <= 255)
+	// {
+	// 	digitalWrite(M1_IN1, LOW);
+	// 	digitalWrite(M1_IN2, HIGH);
+	// 	analogWrite(M1_EN, SPEED_1);
+	// }
 	
-	if (SPEED_2 < 0 && SPEED_2 >= -255)
-	{
-		digitalWrite(M2_IN1, LOW);
-		digitalWrite(M2_IN2, HIGH);
-		analogWrite(M2_EN, SPEED_2 * -1);
-	}
-	if (SPEED_2 > 0 && SPEED_2 <= 255)
-	{
-		digitalWrite(M2_IN1, HIGH);
-		digitalWrite(M2_IN2, LOW);
-		analogWrite(M2_EN, SPEED_2);
-	}
+	// if (SPEED_2 < 0 && SPEED_2 >= -255)
+	// {
+	// 	digitalWrite(M2_IN1, LOW);
+	// 	digitalWrite(M2_IN2, HIGH);
+	// 	analogWrite(M2_EN, SPEED_2 * -1);
+	// }
+	// if (SPEED_2 > 0 && SPEED_2 <= 255)
+	// {
+	// 	digitalWrite(M2_IN1, HIGH);
+	// 	digitalWrite(M2_IN2, LOW);
+	// 	analogWrite(M2_EN, SPEED_2);
+	// }
 
-	if(SPEED_3 < 0 && SPEED_3 >= -255)
-	{
-		digitalWrite(M3_IN1, LOW);
-		digitalWrite(M3_IN2, HIGH);
-		analogWrite(M3_EN, SPEED_3 * -1);
-	}
+	// if(SPEED_3 < 0 && SPEED_3 >= -255)
+	// {
+	// 	digitalWrite(M3_IN1, LOW);
+	// 	digitalWrite(M3_IN2, HIGH);
+	// 	analogWrite(M3_EN, SPEED_3 * -1);
+	// }
 
-	if(SPEED_3 > 0 && SPEED_3 <= 255)
-	{
-		digitalWrite(M3_IN1, HIGH);
-		digitalWrite(M3_IN2, LOW);
-		analogWrite(M3_EN, SPEED_3);
-	}
+	// if(SPEED_3 > 0 && SPEED_3 <= 255)
+	// {
+	// 	digitalWrite(M3_IN1, HIGH);
+	// 	digitalWrite(M3_IN2, LOW);
+	// 	analogWrite(M3_EN, SPEED_3);
+	// }
 
 	
 }
@@ -90,18 +136,22 @@ void Motor::direction(int dir, int speed)
 IR_SENSOR::IR_SENSOR()
 = default;
 
-void IR_SENSOR::init(){
-	for (int i = 0; i < 12; i++){
-		pinMode(IR_SENS[i], INPUT);
-	}
-}
+// MODE: 0 = Standalone; 1 = Multiplexer
 
-void IR_SENSOR::initMux(){
-	pinMode(IR_S0, INPUT);
-	pinMode(IR_S1, INPUT);
-	pinMode(IR_S2, INPUT);
-	pinMode(IR_S3, INPUT);
-	pinMode(COMM_OUT, OUTPUT);
+void IR_SENSOR::init(int mode){
+	switch (mode){
+		case 0:
+			for (int i = 0; i < 12; i++){
+				pinMode(IR_SENS[i], INPUT);
+			}	
+		case 1:
+			pinMode(IR_S0, INPUT);
+			pinMode(IR_S1, INPUT);
+			pinMode(IR_S2, INPUT);
+			pinMode(IR_S3, INPUT);
+			pinMode(COMM_OUT, OUTPUT);
+	}
+	
 }
 
 // SONAR FUNCTIONS
