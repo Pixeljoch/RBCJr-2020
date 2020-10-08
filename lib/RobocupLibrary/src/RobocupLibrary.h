@@ -41,9 +41,12 @@ class IR_SENSOR{
 		#define IR_S2 24
 		#define IR_S3 25	
 		#define COMM_OUT A0
+
+		const int IR_SENS[12] = {A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12};
 	public:
 		IR_SENSOR();
 		void init();
+		void initMux();
 		
 };
 

@@ -91,6 +91,12 @@ IR_SENSOR::IR_SENSOR()
 = default;
 
 void IR_SENSOR::init(){
+	for (int i = 0; i < 12; i++){
+		pinMode(IR_SENS[i], INPUT);
+	}
+}
+
+void IR_SENSOR::initMux(){
 	pinMode(IR_S0, INPUT);
 	pinMode(IR_S1, INPUT);
 	pinMode(IR_S2, INPUT);
