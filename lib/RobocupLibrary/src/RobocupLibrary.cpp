@@ -141,7 +141,7 @@ IR_SENSOR::IR_SENSOR()
 void IR_SENSOR::init(int mode){
 	switch (mode){
 		case 0:
-			for (int i = 0; i < 12; i++){
+			for (int i = 3; i < 15; i++){
 				pinMode(IR_SENS[i], INPUT);
 			}	
 		case 1:
@@ -151,7 +151,52 @@ void IR_SENSOR::init(int mode){
 			pinMode(IR_S3, INPUT);
 			pinMode(COMM_OUT, OUTPUT);
 	}
+}
+
+void IR_SENSOR::selectSens(){
+	int input[] = {
+         analogRead(IR_SENS[0]),
+		 analogRead(IR_SENS[1]),
+		 analogRead(IR_SENS[2]),
+		 analogRead(IR_SENS[3]),
+		 analogRead(IR_SENS[4]),
+		 analogRead(IR_SENS[5]),
+		 analogRead(IR_SENS[6]),
+		 analogRead(IR_SENS[7]),
+		 analogRead(IR_SENS[8]),
+		 analogRead(IR_SENS[9]),
+		 analogRead(IR_SENS[10]),
+		 analogRead(IR_SENS[11])
+     };
+
+
+    int strongestValue = 0;
+    int strongestInput = 0;
+    for (int i = 0; i < 12; i++) {
+        if (input[i] > strongestValue) {
+            strongestValue = input[i];
+            strongestInput = i;
+        }
+    }
+    returnArray[0] = strongestInput;
+    returnArray[1] = calculateStrength(strongestValue);
 	
+
+}
+
+int IR_SENSOR::calculateStrength(int strength) {
+    if (strength >= 300) {
+        return 1;
+    }
+    else if (strength >= 200) {
+        return 2;
+    }
+    else if (strength >= 100) {
+        return 3;
+    }
+    else if (strength >= 50) {
+        return 4;
+    }
 }
 
 // SONAR FUNCTIONS
