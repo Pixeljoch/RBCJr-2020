@@ -5,6 +5,9 @@
 */
 
 #include <Arduino.h>
+#include <SoftwareSerial.h>
+#include <Wire.h>
+
 #include <RobocupLib.h>
 
 TMotor m1 (3, 2, 4);
@@ -37,8 +40,10 @@ void robotDirection(int dir, int speed, double acc, int motorDelay){
 }
 
 void loop() {
-	robotDirection(0, 255, 0.15, 30);
-	delay(1500);
-	robotDirection(90, 255, 0.15, 30);
-	delay(1500);
+	int value = analogRead(A0);
+	if(value > 600){
+		value = 0;
+	}
+	Serial.println(value);
+	delay(300);
 }
