@@ -9,10 +9,17 @@ class TMotor {
         int in1, in2, pwm;
         int lastSpeed = 0;
         bool isOn;
-        void TMotor::cruise(int speedCurrent, int speedFinal, double acc, int motorDelay);
     public:
         TMotor::TMotor(int pin1, int pin2, int pin3);
-        void move(int setPWM, double acc, int motorDelay);
+        void move(int setPWM);
+};
+
+class IR_SENSOR{
+    private:
+        int ir_pin;
+    public:
+        IR_SENSOR::IR_SENSOR(int pin);
+        int readSensor();
 };
 
 
