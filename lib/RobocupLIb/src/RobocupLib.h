@@ -1,8 +1,19 @@
 #ifndef ROBOCUPLIBREWRITE_H_
 #define ROBOCUPLIBREWRITE_H_
 
+
 #include <Arduino.h>
 #include <math.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+
+static float startMillis;
+
+void gyroInit();
+float calculateElapsedTime(float delayTime);
+float returnGyro();
+float calculateError(int calTime);
+float calculateDegree(float errorMargin, float delayTime);
 
 class TMotor {
     private:
