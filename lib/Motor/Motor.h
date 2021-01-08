@@ -10,8 +10,9 @@ class Motor {
         int in1, in2, enc1, enc2, pwm;
         float speeddiff;
     public:
-        Motor(int in1, int in2, int pwm, int enc1, int enc2, float speeddiff);
-        Motor(int in1, int in2, int pwm, int enc1, int enc2);
+        Motor();
+        Motor(int in1, int in2, int pwm, float speeddiff);
+        Motor(int in1, int in2, int pwm);
         void test(); 
         void move(float speed);
         void setup();
@@ -22,8 +23,8 @@ class MotorControl {
         Motor m1, m2, m3;
     public:
         MotorControl(Motor m1, Motor m2, Motor m3);
-        void forward(float time); 
-        void backward(float time);
+        void forward(float time, float speed); 
+        void backward(float time, float speed);
         void right(float degrees);
         void left(float degrees);
 };
