@@ -1,5 +1,6 @@
 # RBCJr-2020
 
-Corderius College Robocup Project by Pixeljoch, JobCremers, Nielsnlamf and Crack3dC0d3.
+Recode of master
 
-Based on PlatformIO
+
+https://trello.com/invite/b/HYCgSlrY/07b7fffe2809608cc317713d0de6d290/robo-shizzles
