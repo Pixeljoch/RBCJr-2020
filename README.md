@@ -1,5 +1,5 @@
 # RBCJr-2020
 
-Corderius College Robocup Project by Pixeljoch and Crack3dC0d3
+Corderius College Robocup Project by Pixeljoch, JobCremers, Nielsnlamf and Crack3dC0d3.
 
 Based on PlatformIO
