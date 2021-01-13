@@ -2,6 +2,7 @@
 #define MOTOR_H_
 
 #include <Arduino.h>
+#include <math.h>
 #include <Motor.h>
 #include <Core.h>
 
@@ -25,8 +26,7 @@ class MotorControl {
         MotorControl(Motor m1, Motor m2, Motor m3);
         void forward(float time, float speed); 
         void backward(float time, float speed);
-        void right(float degrees);
-        void left(float degrees);
+        void move(double degrees, int baseSpeed);
 };
 
 #endif

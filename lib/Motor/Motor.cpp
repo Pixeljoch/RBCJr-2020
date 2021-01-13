@@ -1,6 +1,8 @@
 #include <Arduino.h>
-#include <Core.h>
+#include <math.h>
 #include <Motor.h>
+#include <Core.h>
+#include <Encoder_ctm.h>
 
 /**
  * Constructor
@@ -39,8 +41,9 @@ void Motor::setup() {
 
 // Just for testing purposes
 void Motor::test() {
-    debug("Encoder A: " + String(analogRead(enc1)));
-    debug("Encoder B: " + String(analogRead(enc2)));
+    debug(String(in1));
+    debug(String(in2));
+    debug(String(pwm));
 }
 
 /**
@@ -100,10 +103,15 @@ void MotorControl::backward(float time, float speed) {
     m3.move(0);
 }
 
-void MotorControl::right(float degrees) {
-    
-}
-
-void MotorControl::left(float degrees) {
-
+void MotorControl::move(double degrees, int baseSpeed) {
+    float pi = 57.29577951;
+    float speedM1 = -(baseSpeed) * sin((degrees + 180) / pi);
+    float speedM2 = -(baseSpeed) * sin((degrees + 60) / pi);
+    float speedM3 = -(baseSpeed) * sin((degrees - 60) / pi);
+    m1.move(speedM1);
+    m2.move(speedM2);
+    m3.move(speedM3);
+    m1.test();
+    m2.test();
+    m3.test();
 }
