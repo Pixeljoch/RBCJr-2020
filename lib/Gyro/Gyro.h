@@ -8,14 +8,11 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 
-class Gyro {
-    private:
-        Adafruit_MPU6050 mpu;
-    public:
-        Gyro();
-        void setup();
+static float startMillis;
 
-}
+void gyroSetup();
+
+void getGyroShizzle();
 
     
 #endif

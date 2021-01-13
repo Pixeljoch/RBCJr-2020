@@ -2,6 +2,7 @@
 #include <Core.h>
 #include <Motor.h>
 #include <Encoder_ctm.h>
+#include <Gyro.h>
 
 // EncoderData datam2;
 // EncoderData datam3;
@@ -52,6 +53,7 @@ void setup() {
   m2.setup();
   m3.setup();
   //control = MotorControl(m1, m2, m3);
+  gyroSetup();
 }
 
 int speed = 200;
@@ -75,8 +77,7 @@ void loop() {
   //   Serial.print("Motor 3: ");
   //   Serial.println(datam3.calcRPM());
   //  control.move(0, 255);
-  move(-135, 0);
-
+  getGyroShizzle();
   // for(int i = 0; i < speed; i+=10) {
   //   m2.move(i);
   //   m3.move(i*-1);
@@ -87,6 +88,7 @@ void loop() {
   // m2.move(100);
   // m3.move(100);
   // delay(500);
+  delay(200);
 
 }
 
