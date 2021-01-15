@@ -2,6 +2,7 @@
 #define GYRO_H_
 
 #include <Arduino.h>
+#include <Wire.h>
 #include <math.h>
 #include <Core.h>
 #include <Gyro.h>
@@ -12,7 +13,7 @@ static float startMillis;
 
 void gyroSetup();
 
-void getGyroShizzle();
+void correctMovement();
 
     
 #endif

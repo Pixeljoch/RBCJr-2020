@@ -1,62 +1,36 @@
+/* Get tilt angles on X and Y, and rotation angle on Z
+ * Angles are given in degrees
+ * 
+ * License: MIT
+ */
+
 #include <Arduino.h>
-#include <Core.h>
+#include "Wire.h"
 #include <Motor.h>
-#include <Encoder_ctm.h>
-#include <Gyro.h>
+#include <SparkFunLSM9DS1.h>
 
-// EncoderData datam2;
-// EncoderData datam3;
-
- Motor m1 (2, 3, 4);
- Motor m2 (6, 7, 5);
- Motor m3 (8, 9, 10);
-
-//MotorControl control;
-
-// void encoder2change() {
-//   if (digitalRead(12)==LOW)
-//   {
-//     datam3.ticksmoved++;
-//   }
-//   else
-//   {
-//     datam3.ticksmoved--;
-//   }
-//   datam3.currentpulsetime=micros()-datam3.previoustime;
-//   datam3.previoustime=micros();
-// }
-
-// void encoder1change() {
-//   if (digitalRead(11)==LOW)
-//   {
-//     datam2.ticksmoved++;
-//   }
-//   else
-//   {
-//     datam2.ticksmoved--;
-//   }
-//   datam2.currentpulsetime=micros()-datam2.previoustime;
-//   datam2.previoustime=micros();
-// }
+LSM9DS1 IMU;
+Motor m1 (2, 3, 4);
+Motor m2 (6, 7, 5);
+Motor m3 (8, 9, 10);
+unsigned long timer = 0;
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  pinMode(20, INPUT);
-  pinMode(11, INPUT);
-  pinMode(21, INPUT);
-  pinMode(12, INPUT);
-  // attachInterrupt(digitalPinToInterrupt(20), encoder1change, RISING);
-  // attachInterrupt(digitalPinToInterrupt(21), encoder2change, RISING);
+  setupCore();
 
-  m1.setup();
-  m2.setup();
-  m3.setup();
-  //control = MotorControl(m1, m2, m3);
-  gyroSetup();
+  Wire.begin();
+  if (IMU.begin() == false) // with no arguments, this uses default addresses (AG:0x6B, M:0x1E) and i2c port (Wire).
+  {
+    Serial.println("Failed to communicate with LSM9DS1.");
+    Serial.println("Double-check wiring.");
+    Serial.println("Default settings in this sketch will " \
+                   "work for an out of the box LSM9DS1 " \
+                   "Breakout, but may need to be modified " \
+                   "if the board jumpers are.");
+    while (1);
+  }
+  IMU.calibrate(false);
 }
-
-int speed = 200;
 
 void move(double degrees, int baseSpeed) {
     float pi = 57.29577951;
@@ -71,25 +45,32 @@ void move(double degrees, int baseSpeed) {
     debug(String(speedM3));
 }
 
-void loop() {
-  //   Serial.print("Motor 2: ");
-  //   Serial.println(datam2.calcRPM());
-  //   Serial.print("Motor 3: ");
-  //   Serial.println(datam3.calcRPM());
-  //  control.move(0, 255);
-  getGyroShizzle();
-  // for(int i = 0; i < speed; i+=10) {
-  //   m2.move(i);
-  //   m3.move(i*-1);
-  //   delay(100);
-  // }
-  // delay(500);
-  // m1.move(-200);
-  // m2.move(100);
-  // m3.move(100);
-  // delay(500);
-  delay(200);
-
+void printGyro()
+{
+  // Now we can use the gx, gy, and gz variables as we please.
+  // Either print them as raw ADC values, or calculated in DPS.
+  Serial.print("G: ");
+  // If you want to print calculated values, you can use the
+  // calcGyro helper function to convert a raw ADC value to
+  // DPS. Give the function the value that you want to convert.
+  Serial.print(IMU.calcGyro(IMU.gx), 2);
+  Serial.print(", ");
+  Serial.print(IMU.calcGyro(IMU.gy), 2);
+  Serial.print(", ");
+  Serial.print(IMU.calcGyro(IMU.gz), 2);
+  Serial.println(" deg/s");
 }
+ 
+void loop() {
+    if ( IMU.gyroAvailable() )
+  {
+    // debug("Je/ vuile moer");
+    // To read from the gyroscope,  first call the
+    // readGyro() function. When it exits, it'll update the
+    // gx, gy, and gz variables with the most current data.
+    IMU.readGyro();
 
-
+    delay(100);
+    printGyro();
+  }
+}
